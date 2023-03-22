@@ -6,12 +6,14 @@
 // тільки замість білого модального вікна рендериться зображення (у прикладі натисніть Run).
 //  Анімацію робити не потрібно!
 
+import { Overlay, ModalForm } from './Modal.styled';
+
 export const Modal = () => {
   return (
-    <div class="overlay">
-      <div class="modal">
+    <Overlay>
+      <ModalForm>
         <img src="" alt="" />
-      </div>
-    </div>
+      </ModalForm>
+    </Overlay>
   );
 };

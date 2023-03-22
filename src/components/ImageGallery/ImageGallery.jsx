@@ -1,3 +1,6 @@
+import {Gallery} from './ImageGallery.styled'
+
+
 export const ImageGallery = () => {
-  return <ul class="gallery">{/* <!-- Набір <li> із зображеннями --> */}</ul>;
+  return <Gallery>{/* <!-- Набір <li> із зображеннями --> */}</Gallery>;
 };
