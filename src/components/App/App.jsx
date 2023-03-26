@@ -7,11 +7,10 @@ import { Searchbar } from 'components/Searchbar/Searchbar';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
+import { Modal } from 'components/Modal/Modal';
+
 import { AppBox } from './App.styled';
 import { fetchImages, PER_PAGE } from '../../serviceAPI/Api';
-// import { isVisible } from '@testing-library/user-event/dist/utils';
-
-// import { Modal } from 'components/Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -22,6 +21,8 @@ export class App extends Component {
     loading: false,
     currentPerPage: null,
     error: null,
+    showModal: false,
+    largeImageURL: '',
   };
 
   componentDidUpdate = (_, prevState) => {
@@ -71,6 +72,7 @@ export class App extends Component {
       loading: false,
       currentPerPage: null,
       error: null,
+      largeImageURL: '',
     });
   };
 
@@ -78,14 +80,34 @@ export class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
+
+  getLargeImageURL = largeImageURL => {
+    this.setState({ largeImageURL });
+  };
+
   render() {
-    const { gallery, isVisible, loading, currentPerPage, error } = this.state;
+    const {
+      gallery,
+      isVisible,
+      loading,
+      currentPerPage,
+      error,
+      showModal,
+      largeImageURL,
+    } = this.state;
 
     return (
       <AppBox>
         <Searchbar searchQuery={this.searchQuery} />
 
-        <ImageGallery gallery={gallery} />
+        <ImageGallery
+          gallery={gallery}
+          showModal={this.toggleModal}
+          getLargeImageURL={this.getLargeImageURL}
+        />
 
         {isVisible &&
           (loading ? <Loader /> : <Button loadMore={this.loadMoreBtn} />)}
@@ -101,9 +123,13 @@ export class App extends Component {
             Something went wrong. Try again later.
           </p>
         )}
+        {showModal && (
+          <Modal closeModal={this.toggleModal}>
+            <img src={largeImageURL} alt="" />
+          </Modal>
+        )}
 
         <ToastContainer />
-        {/* <Modal /> */}
       </AppBox>
     );
   }

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import {toastWarningMessage} from '../../serviceAPI/toast'
+import propTypes from 'prop-types';
 
 
 import {
@@ -57,3 +58,6 @@ export class Searchbar extends Component {
   }
 }
 
+Searchbar.propTypes = {
+  onSubmit: propTypes.func.isRequired,
+};
